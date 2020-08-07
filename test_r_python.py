@@ -12,7 +12,7 @@ import numpy as np
 from _5a_aux_functions import *
 ## Read in post-sim ACS
 dr = pd.read_csv('./output/output_20200806_210828/acs_sim_ri_20200806_210828.csv')
-dp = pd.read_csv('./output/output_20200806_210528_main simulation/acs_sim_ri_20200806_210528.csv')
+dp = pd.read_csv('./output/output_20200807_142432_main simulation/acs_sim_ri_20200807_142432.csv')
 
 ## Find which persons are in R but not Python
 dm = pd.merge(dp[['SERIALNO', 'SPORDER']], dr[['SERIALNO', 'SPORDER']], how='outer', indicator=True)
@@ -97,6 +97,20 @@ for c in num_cols:
     print('clean ACS, R')
     print(acs_r[c].describe())
     print('-----------------------------')
+# empsize - underlying var for fmla_eligible
+for c in ['empsize', 'oneemp']:
+    print('clean ACS, Py')
+    print(acs_p[c].value_counts().sort_index())
+    print('clean ACS, R')
+    print(acs_r[c].value_counts().sort_index())
+    print('-----------------------------')
+for c in ['empsize']:
+    print('clean ACS, Py')
+    print(acs_p[c].value_counts().sum())
+    print('clean ACS, R')
+    print(acs_r[c].value_counts().sum())
+    print('-----------------------------')
+
 
 # get diff in eligible workers' IDs between dr and dp
 # NOTE: SERIALNO is id for household not person.
